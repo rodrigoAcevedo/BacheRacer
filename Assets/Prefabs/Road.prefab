@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4060598659692099135}
   - component: {fileID: 4060598659692099134}
+  - component: {fileID: -2849676335745498153}
   m_Layer: 0
   m_Name: Road
   m_TagString: Untagged
@@ -48,13 +49,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 7
   Height: 8
-  ObstaclesAmount: 3
   CellDimension: 0.6
   Origin: {fileID: 1191482837053615523}
   BumpPrefabs:
   - {fileID: 6259881993468935575, guid: c95d2c6f07cd3b544a11b89733b30a1e, type: 3}
   - {fileID: 6259881993468935575, guid: af7516a96b47e7547b5c1732f55c4d5a, type: 3}
   - {fileID: 6259881993468935575, guid: bfb7beda54c537943a1be1caf5692b00, type: 3}
+  RoadRenderer: {fileID: 4060598660916057182}
+--- !u!50 &-2849676335745498153
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060598659692097985}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &4060598660916057184
 GameObject:
   m_ObjectHideFlags: 0
