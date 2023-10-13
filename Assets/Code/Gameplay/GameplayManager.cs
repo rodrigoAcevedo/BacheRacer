@@ -38,6 +38,7 @@ public class GameplayManager : MonoBehaviour
             InstantiateNewRoad();
         }
     }
+    
 
     private void InstantiateInitialRoads()
     {
