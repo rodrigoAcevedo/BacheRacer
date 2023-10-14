@@ -21,7 +21,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     private List<RoadController> roads;
 
-    private float ScrollSpeed => GameManager.Instance.BaseParameters.BaseScrollSpeed;
+    private float ScrollSpeed => GameManager.Instance.BaseParameters.BaseScrollSpeed + GameManager.Instance.TotalKilometersRan; // We want to make each level a bit more difficult adding speed.
     private float Mileage = 0f;
     private float Timer = 0f;
     private bool IsRiding = true;
@@ -67,13 +67,7 @@ public class GameplayManager : MonoBehaviour
         {
             Timer += Time.deltaTime;
             
-            if (Timer >= 1.0f) // One second
-            {
-                Timer = 0f;
-                Mileage += ScrollSpeed;
-            }
-
-            if (Mileage >= TotalTrackToWin)
+            if (Timer >= GameManager.Instance.BaseParameters.LevelDurationInSeconds)
             {
                 IsRiding = false;
                 Events.OnMessage.Dispatch(MessageType.Principal, "Ganaste!");
