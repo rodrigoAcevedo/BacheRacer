@@ -35,8 +35,16 @@ public class RoadController : MonoBehaviour
             }
         }
 
-        RB.velocity = new Vector2(0, scrollSpeed);
+        SetScrollSpeed(scrollSpeed);
         CameraBounds = CameraUtilities.CalculateCameraBoundaries();
+    }
+    
+    public void SetScrollSpeed(float speed)
+    {
+        //if(RB != null)
+        {
+            RB.velocity = new Vector2(0, speed);
+        }
     }
 
     private void InstantiateAtRoad(int x, int y)
@@ -58,10 +66,11 @@ public class RoadController : MonoBehaviour
         float topYPosition = gameObject.transform.position.y + (RoadDimension / 2);
         if (topYPosition < CameraBounds.Item1)
         {
+            Events.OnRemoveFromRoadList.Dispatch(this);
             Destroy(gameObject);
         }
     }
-    
+
     void FixedUpdate()
     {
         CheckForOutOfBoundaries();
