@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     
     private bool TouchingScreen = false;
     private bool CanMove = true;
-    private bool Invulnerable = false; // We use this when we don't want to take damage, for example when we win the level sequence. Also a powerup maybe in a future?
+    private bool WonLevel = false;
 
     private Vector3 Target;
     // Start is called before the first frame update
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
                 MovingToTarget();
             }
         }
-        else if (Invulnerable) // For now only applies when wining levels.
+        else if (WonLevel)
         {
             MovingToTarget();
         }
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDamage(float damage)
     {
-        if (!Invulnerable)
+        if (!WonLevel)
         {
             Health -= damage;
         }
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnWinLevel()
     {
-        Invulnerable = true;
+        WonLevel = true;
         CanMove = false;
         Target.y = 6f;
     }
