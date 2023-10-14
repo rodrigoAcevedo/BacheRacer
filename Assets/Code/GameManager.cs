@@ -4,6 +4,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public int TotalKilometersRan = 0; // TODO: Retrieve from player prefs.
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
@@ -18,6 +19,6 @@ public class MenuController : MonoBehaviour
 
     private void PlayGame()
     {
-        
+        SceneManager.LoadScene(sceneName: "Intermission");
     }
 }

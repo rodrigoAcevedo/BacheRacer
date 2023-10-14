@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameplayManager : MonoBehaviour
@@ -78,10 +79,12 @@ public class GameplayManager : MonoBehaviour
                 IsRiding = false;
                 Events.OnMessage.Dispatch(MessageType.Principal, "Ganaste!");
                 Events.OnWinLevel.Dispatch();
+                GameManager.Instance.TotalKilometersRan++;
+                Invoke(nameof(TransitionToIntermission), 5f);
             }
         }
     }
-    
+
 
     private void InstantiateInitialRoads()
     {
@@ -115,5 +118,16 @@ public class GameplayManager : MonoBehaviour
             road.SetScrollSpeed(0);
         }
         Events.OnMessage.Dispatch(MessageType.Principal, "Has perdido");
+        Invoke(nameof(TransitionToMainMenu), 5f);
+    }
+    
+    private void TransitionToIntermission()
+    {
+        SceneManager.LoadScene(sceneName: "Intermission");
+    }
+
+    private void TransitionToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
