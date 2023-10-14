@@ -15,14 +15,13 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private float Dimension = 5f;
     [SerializeField] private float YOriginOrdinate = -5f;
     [SerializeField] private int TotalRoadCellsToShow = 3;
-    // For now we want this serialized but probably this value will come from the GameManager
-    [SerializeField] private float ScrollSpeed = 2;
-    [FormerlySerializedAs("initialObstacles")] [SerializeField] private int InitialObstacles = 0;
+    [SerializeField] private int InitialObstacles = 0;
     [SerializeField] private float TotalTrackToWin = 100;
     
     [SerializeField]
     private List<RoadController> roads;
 
+    private float ScrollSpeed => GameManager.Instance.BaseParameters.BaseScrollSpeed;
     private float Mileage = 0f;
     private float Timer = 0f;
     private bool IsRiding = true;
@@ -58,7 +57,7 @@ public class GameplayManager : MonoBehaviour
         if (lastRoadYPosition < CameraUtilities.CalculateCameraBoundaries().Item2) // TODO: Add a method or property to get this on CameraUtilities.
         {
             float roadYPosition = ((2 * Dimension) + YOriginOrdinate) + (Dimension / 2); 
-            InstantiateRoad(roadYPosition, 3);
+            InstantiateRoad(roadYPosition, GameManager.Instance.BaseParameters.BaseObstaclesAmount);
         }
     }
 
@@ -67,7 +66,7 @@ public class GameplayManager : MonoBehaviour
         if (IsRiding)
         {
             Timer += Time.deltaTime;
-
+            
             if (Timer >= 1.0f) // One second
             {
                 Timer = 0f;

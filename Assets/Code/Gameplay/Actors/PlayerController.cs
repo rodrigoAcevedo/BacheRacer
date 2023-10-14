@@ -5,8 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private float Health = 100f;
-    [SerializeField]
-    private float TurnSpeed = 3f;
+
+    private float TurnSpeed => GameManager.Instance.BaseParameters.BaseTurnSpeed;
     
     private bool TouchingScreen = false;
     private bool CanMove = true;

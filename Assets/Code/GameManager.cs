@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 
     public int TotalKilometersRan = 0; // TODO: Retrieve from player prefs.
 
+    [SerializeField] public GameParameters BaseParameters;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)

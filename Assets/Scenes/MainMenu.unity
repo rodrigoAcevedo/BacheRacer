@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2cabdd893cc748e180aff8d7439b528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KilometersDone: {fileID: 0}
   PlayButton: {fileID: 796656225}
 --- !u!4 &120867360
 Transform:
@@ -281,6 +282,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ee945930c3ae54ea328f86fa2009b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TotalKilometersRan: 0
+  BaseParameters:
+    BaseScrollSpeed: 2
+    BaseTurnSpeed: 3
+    BaseObstaclesAmount: 3
 --- !u!4 &788646410
 Transform:
   m_ObjectHideFlags: 0
