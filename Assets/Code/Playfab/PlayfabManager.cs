@@ -34,16 +34,34 @@ public class PlayfabManager : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSent, OnDataSentError);
     }
+
+    public void GetData()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnDataReceivedError);
+    }
     private void OnDataSent(UpdateUserDataResult result)
     {
-        
+        // TODO: Complete
     }
 
     private void OnDataSentError(PlayFabError error)
     {
-        
+        // TODO: Complete
     }
 
+    private void OnDataReceived(GetUserDataResult result)
+    {
+        Debug.Log("Received user data!");
+        if (result.Data != null)
+        {
+            // TODO: See how to handle data that we receive from server.
+        }
+    }
+
+    private void OnDataReceivedError(PlayFabError error)
+    {
+        // TODO: Complete
+    }
     
     private void Start()
     {
