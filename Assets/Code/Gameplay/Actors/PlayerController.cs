@@ -1,10 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float Health = 100f;
+    private float Health;
 
     private float TurnSpeed => GameManager.Instance.BaseParameters.BaseTurnSpeed;
     
@@ -13,7 +13,12 @@ public class PlayerController : MonoBehaviour
     private bool WonLevel = false;
 
     private Vector3 Target;
-    // Start is called before the first frame update
+
+    private void Start()
+    {
+        Health = GameManager.Instance.LastKnownPlayerHealth;
+    }
+
     private void OnEnable()
     {
         Events.OnDamage.Subscribe(OnDamage);
@@ -78,7 +83,9 @@ public class PlayerController : MonoBehaviour
         {
             CanMove = false;
             Events.OnLoseGame.Dispatch();
+            PlayfabManager.Instance.SaveData("Health", Health.ToString());
         }
+        Events.OnUpdatePlayerHealth.Dispatch(Health.ToString());
     }
 
     private void OnWinLevel()
@@ -86,5 +93,6 @@ public class PlayerController : MonoBehaviour
         WonLevel = true;
         CanMove = false;
         Target.y = 6f;
+        PlayfabManager.Instance.SaveData("Health", Health.ToString());
     }
 }

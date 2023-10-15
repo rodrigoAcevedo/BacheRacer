@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public int TotalKilometersRan = 0; // TODO: Retrieve from player prefs.
+    public float LastKnownPlayerHealth = 100f;
 
     [SerializeField] public GameParameters BaseParameters;
     

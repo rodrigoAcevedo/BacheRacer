@@ -16,13 +16,11 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private float YOriginOrdinate = -5f;
     [SerializeField] private int TotalRoadCellsToShow = 3;
     [SerializeField] private int InitialObstacles = 0;
-    [SerializeField] private float TotalTrackToWin = 100;
     
     [SerializeField]
     private List<RoadController> roads;
 
     private float ScrollSpeed => GameManager.Instance.BaseParameters.BaseScrollSpeed + GameManager.Instance.TotalKilometersRan; // We want to make each level a bit more difficult adding speed.
-    private float Mileage = 0f;
     private float Timer = 0f;
     private bool IsRiding = true;
 

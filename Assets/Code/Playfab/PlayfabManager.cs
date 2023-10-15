@@ -4,10 +4,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 
 public class PlayfabManager : MonoBehaviour
 {
+    public static PlayfabManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    public void SaveData(string property, string value)
+    {
+        UpdateUserDataRequest request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                { property, value }
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(request, OnDataSent, OnDataSentError);
+    }
+    private void OnDataSent(UpdateUserDataResult result)
+    {
+        
+    }
+
+    private void OnDataSentError(PlayFabError error)
+    {
+        
+    }
+
+    
     private void Start()
     {
         Login();
