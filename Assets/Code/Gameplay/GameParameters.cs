@@ -5,4 +5,6 @@ public class GameParameters
     public float BaseTurnSpeed;
     public int BaseObstaclesAmount;
     public float LevelDurationInSeconds;
+    public float DefaultPlayerHealth;
+    public int DefaultKilometersRan;
 }

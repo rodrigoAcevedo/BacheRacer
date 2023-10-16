@@ -13,21 +13,28 @@ public class MenuController : MonoBehaviour
     private void OnEnable()
     {
         PlayButton.onClick.AddListener(PlayGame);
+        Events.OnUpdateMenuStats.Subscribe(OnUpdateMenuStats);
     }
 
     private void OnDisable()
     {
         PlayButton.onClick.RemoveListener(PlayGame);
+        Events.OnUpdateMenuStats.Unsubscribe(OnUpdateMenuStats);
     }
 
     private void Start()
     {
-        KilometersDone.text = $"Km: {GameManager.Instance.TotalKilometersRan}";
-        PlayerHealth.text = $"Health: {GameManager.Instance.LastKnownPlayerHealth}";
+        OnUpdateMenuStats();
     }
 
     private void PlayGame()
     {
         SceneManager.LoadScene(sceneName: "Intermission");
+    }
+
+    private void OnUpdateMenuStats()
+    {
+        KilometersDone.text = $"Km: {GameManager.Instance.TotalKilometersRan}";
+        PlayerHealth.text = $"Health: {GameManager.Instance.LastKnownPlayerHealth}";
     }
 }

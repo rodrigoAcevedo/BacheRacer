@@ -426,6 +426,8 @@ MonoBehaviour:
     BaseTurnSpeed: 3
     BaseObstaclesAmount: 3
     LevelDurationInSeconds: 50
+    DefaultPlayerHealth: 100
+    DefaultKilometersRan: 0
 --- !u!4 &788646410
 Transform:
   m_ObjectHideFlags: 0

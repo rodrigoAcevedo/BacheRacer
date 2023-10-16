@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        Health = GameManager.Instance.LastKnownPlayerHealth;
+        Health = UserDataUtility.GetPlayerHealth();
     }
 
     private void OnEnable()
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         {
             CanMove = false;
             Events.OnLoseGame.Dispatch();
-            PlayfabManager.Instance.SaveData("Health", Health.ToString());
+            UserDataUtility.SetPlayerHealth(Health);
         }
         Events.OnUpdatePlayerHealth.Dispatch(Health.ToString());
     }
@@ -93,6 +93,6 @@ public class PlayerController : MonoBehaviour
         WonLevel = true;
         CanMove = false;
         Target.y = 6f;
-        PlayfabManager.Instance.SaveData("Health", Health.ToString());
+        UserDataUtility.SetPlayerHealth(Health);
     }
 }

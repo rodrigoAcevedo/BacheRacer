@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -71,6 +72,7 @@ public class GameplayManager : MonoBehaviour
                 Events.OnMessage.Dispatch(MessageType.Principal, "Ganaste!");
                 Events.OnWinLevel.Dispatch();
                 GameManager.Instance.TotalKilometersRan++;
+                UserDataUtility.SetPlayerKilometersRan(GameManager.Instance.TotalKilometersRan);
                 Invoke(nameof(TransitionToIntermission), 5f);
             }
         }

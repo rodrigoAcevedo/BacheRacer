@@ -26,7 +26,7 @@ public class GameplayUIController : MonoBehaviour
 
     void Start()
     {
-        Health.text = $"Health: {GameManager.Instance.LastKnownPlayerHealth}";
+        Health.text = $"Health: {UserDataUtility.GetPlayerHealth()}";
     }
 
     // Update is called once per frame

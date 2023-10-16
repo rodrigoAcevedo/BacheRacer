@@ -14,7 +14,7 @@ public class IntermissionController : MonoBehaviour
     void Start()
     {
         Invoke(nameof(TransitionToGameplay), transitionTime);
-        CurrentKilometer.text = $"Km: {GameManager.Instance.TotalKilometersRan}";
+        CurrentKilometer.text = $"Km: {UserDataUtility.GetPlayerKilometersRan()}";
     }
 
     private void TransitionToGameplay()
