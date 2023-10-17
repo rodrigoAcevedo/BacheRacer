@@ -4,7 +4,9 @@ using Random = System.Random;
 public enum CellType
 {
     None,
-    Bump
+    Bump,
+    Coin,
+    Diamond
 }
 
 public class RoadGrid
@@ -18,7 +20,7 @@ public class RoadGrid
 
     public CellType[][] Grid => grid;
     
-    public RoadGrid(int width, int height, int obstaclesAmount)
+    public RoadGrid(int width, int height, int obstaclesAmount, int coinsAmount, int diamondsAmount)
     {
         this.width = width;
         this.height = height;
@@ -35,23 +37,35 @@ public class RoadGrid
         }
         
         // Then we add randomly the obstacles in the grid based on the obstaclesAmount value.
-        for (int i = 0; i < obstaclesAmount; i++)
+        if (obstaclesAmount > 0)
+            AddItemsIntoGrid(CellType.Bump, obstaclesAmount);
+        
+        if (coinsAmount > 0)
+            AddItemsIntoGrid(CellType.Coin, coinsAmount);
+        
+        if (diamondsAmount > 0)
+            AddItemsIntoGrid(CellType.Diamond, diamondsAmount);
+    }
+
+    private void AddItemsIntoGrid(CellType type, int amount)
+    {
+        for (int i = 0; i < amount; i++)
         {
-            ConvertIntoBump();
+            ConvertIntoType(type);
         }
     }
 
-    private void ConvertIntoBump()
+    private void ConvertIntoType(CellType type)
     {
         int posX = randomGenerator.Next(0, width);
         int posY = randomGenerator.Next(0, height);
         if (grid[posX][posY] == CellType.None)
         {
-            grid[posX][posY] = CellType.Bump;
+            grid[posX][posY] = type;
         }
         else
         {
-            ConvertIntoBump();
+            ConvertIntoType(type);
         }
     }
 

@@ -19,4 +19,5 @@ public static partial class Events
     
     // Playfab events
     public static readonly GameEvent OnDataReceived = new GameEvent();
+    public static readonly GameEvent OnInventoryDataReceived = new GameEvent();
 }

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     public int TotalKilometersRan;
     public float LastKnownPlayerHealth;
+    public int CoinsAmount;
+    public int DiamondsAmount;
 
     [SerializeField] public GameParameters BaseParameters;
     
@@ -25,11 +27,14 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         Events.OnDataReceived.Subscribe(OnDataReceived);
+        Events.OnInventoryDataReceived.Subscribe(OnInventoryDataReceived);
     }
 
     private void OnDisable()
     {
         Events.OnDataReceived.Unsubscribe(OnDataReceived);
+        Events.OnInventoryDataReceived.Unsubscribe(OnInventoryDataReceived);
+
     }
 
     private void Start()
@@ -40,6 +45,7 @@ public class GameManager : MonoBehaviour
     private void GetUserData()
     {
         UserDataUtility.GetUserDataFromServer();
+        PlayfabManager.Instance.GetUserInventory();
     }
 
     private void OnDataReceived()
@@ -47,7 +53,13 @@ public class GameManager : MonoBehaviour
         Debug.Log(UserDataUtility.Data);
         LastKnownPlayerHealth = UserDataUtility.GetPlayerHealth();
         TotalKilometersRan = UserDataUtility.GetPlayerKilometersRan();
-        // Is this the best place for dispatch this call?
+        Events.OnUpdateMenuStats.Dispatch();
+    }
+
+    private void OnInventoryDataReceived()
+    {
+        CoinsAmount = InventoryUtility.Coins;
+        DiamondsAmount = InventoryUtility.Diamonds;
         Events.OnUpdateMenuStats.Dispatch();
     }
     

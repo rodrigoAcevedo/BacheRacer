@@ -22,6 +22,31 @@ public class PlayfabManager : MonoBehaviour
             Instance = this;
         }
     }
+    
+    public void Login(Action callback)
+    {
+        OnLoginSucessCallback = callback;
+        var request = new LoginWithCustomIDRequest
+        {
+            CustomId = SystemInfo.deviceUniqueIdentifier,
+            CreateAccount = true
+        };
+        PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnLoginError);
+    }
+
+    private void OnSuccess(LoginResult result)
+    {
+        Debug.Log("Succesful login/account create!");
+        OnLoginSucessCallback();
+        OnLoginSucessCallback = null;
+    }
+
+    private void OnLoginError(PlayFabError error)
+    {
+        Debug.Log("Error while login in/creating account!");
+        Debug.Log(error.GenerateErrorReport());
+        OnLoginSucessCallback = null;
+    }
 
     public void SaveData(string property, string value)
     {
@@ -37,7 +62,7 @@ public class PlayfabManager : MonoBehaviour
 
     public void GetData()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnDataReceivedError);
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnError);
     }
     private void OnDataSent(UpdateUserDataResult result)
     {
@@ -60,34 +85,51 @@ public class PlayfabManager : MonoBehaviour
         }
     }
 
-    private void OnDataReceivedError(PlayFabError error)
+    public void GetUserInventory()
     {
-        Debug.Log("Error while getting data to server");
-        Debug.Log(error.GenerateErrorReport());
+        PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnGetUserInventorySuccess, OnError);
     }
 
-    public void Login(Action callback)
+    private void OnGetUserInventorySuccess(GetUserInventoryResult result)
     {
-        OnLoginSucessCallback = callback;
-        var request = new LoginWithCustomIDRequest
-        {
-            CustomId = SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true
-        };
-        PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
-    }
-
-    private void OnSuccess(LoginResult result)
-    {
-        Debug.Log("Succesful login/account create!");
-        OnLoginSucessCallback();
-        OnLoginSucessCallback = null;
+        // Can this be done better?
+        InventoryUtility.Coins = result.VirtualCurrency["CN"];
+        InventoryUtility.Diamonds = result.VirtualCurrency["DM"];
+        Events.OnInventoryDataReceived.Dispatch();
     }
 
     private void OnError(PlayFabError error)
     {
-        Debug.Log("Error while login in/creating account!");
         Debug.Log(error.GenerateErrorReport());
-        OnLoginSucessCallback = null;
+    }
+
+    public void AddCurrency(string type, int value)
+    {
+        AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest()
+        {
+            VirtualCurrency = type,
+            Amount = value
+        };
+        PlayFabClientAPI.AddUserVirtualCurrency(request,OnAddCurrencySuccess, OnError);
+    }
+
+    private void OnAddCurrencySuccess(ModifyUserVirtualCurrencyResult result)
+    {
+        Debug.Log($"Added currency!");
+    }
+
+    public void SubtractCurrency(string type, int value)
+    {
+        SubtractUserVirtualCurrencyRequest request = new SubtractUserVirtualCurrencyRequest()
+        {
+            VirtualCurrency = type,
+            Amount = value
+        };
+        PlayFabClientAPI.SubtractUserVirtualCurrency(request, OnSubtractCurrencySuccess, OnError);
+    }
+
+    private void OnSubtractCurrencySuccess(ModifyUserVirtualCurrencyResult result)
+    {
+        Debug.Log($"Subtracted currency!");
     }
 }

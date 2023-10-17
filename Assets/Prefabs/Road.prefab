@@ -55,7 +55,10 @@ MonoBehaviour:
   - {fileID: 6259881993468935575, guid: c95d2c6f07cd3b544a11b89733b30a1e, type: 3}
   - {fileID: 6259881993468935575, guid: af7516a96b47e7547b5c1732f55c4d5a, type: 3}
   - {fileID: 6259881993468935575, guid: bfb7beda54c537943a1be1caf5692b00, type: 3}
+  CoinPrefab: {fileID: 4530473160281590914, guid: f4192b8b6fdf44ce7bda043482a3334c, type: 3}
+  DiamondPrefab: {fileID: 4828841494346909716, guid: 2df4bbf2c2cc642ea8aff89ffa2300f6, type: 3}
   RoadRenderer: {fileID: 4060598660916057182}
+  RoadDimension: 5
 --- !u!50 &-2849676335745498153
 Rigidbody2D:
   serializedVersion: 4

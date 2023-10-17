@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -55,9 +53,23 @@ public class GameplayManager : MonoBehaviour
         // TODO: Can this be converted in a method on the CameraUtilities?
         if (lastRoadYPosition < CameraUtilities.CalculateCameraBoundaries().Item2) // TODO: Add a method or property to get this on CameraUtilities.
         {
-            float roadYPosition = ((2 * Dimension) + YOriginOrdinate) + (Dimension / 2); 
-            InstantiateRoad(roadYPosition, GameManager.Instance.BaseParameters.BaseObstaclesAmount);
+            float roadYPosition = ((2 * Dimension) + YOriginOrdinate) + (Dimension / 2);
+            InstantiateRoad(roadYPosition, GameManager.Instance.BaseParameters.BaseObstaclesAmount, CoinsToInstance(), DiamondsToInstance());
         }
+    }
+
+    private int CoinsToInstance()
+    {
+        int probabilityToSpawn = Random.Range(0, 101);
+        int threshold = 30;
+        return (int) (probabilityToSpawn <= threshold ? Math.Ceiling((decimal) (probabilityToSpawn / 10)) : 0);
+    }
+
+    private int DiamondsToInstance()
+    {
+        int probabilityToSpawn = Random.Range(0, 101);
+        int threshold = 10;
+        return (probabilityToSpawn <= threshold ? 1 : 0);
     }
 
     private void TrackMileageDone()
@@ -85,17 +97,17 @@ public class GameplayManager : MonoBehaviour
         for (int i = 0; i < TotalRoadCellsToShow; i++)
         {
             float roadYPosition = ((i * Dimension) + YOriginOrdinate);
-            InstantiateRoad(roadYPosition, InitialObstacles);
+            InstantiateRoad(roadYPosition, InitialObstacles, 0, 0);
         }
     }
 
     // TODO: Can this be moved to a Factory like RoadFactory and leave this class to manage only gameplay?
-    private void InstantiateRoad(float yPosition, int obstaclesAmount)
+    private void InstantiateRoad(float yPosition, int obstaclesAmount, int coinsAmount, int diamondsAmount)
     {
         Vector3 roadPosition = new Vector3(0, yPosition, 1);
         GameObject roadCellInstance = Instantiate(RoadPrefab, roadPosition, Quaternion.identity, transform.parent);
         RoadController road = roadCellInstance.GetComponent<RoadController>();
-        road.Setup(obstaclesAmount, ScrollSpeed * (-1f));
+        road.Setup(obstaclesAmount, coinsAmount, diamondsAmount, ScrollSpeed * (-1f));
         roads.Add(road);
     }
 

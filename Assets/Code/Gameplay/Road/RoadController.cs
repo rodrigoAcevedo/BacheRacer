@@ -8,6 +8,8 @@ public class RoadController : MonoBehaviour
     [SerializeField] private float CellDimension = .5f;
     [SerializeField] private Transform Origin;
     [SerializeField] private List<GameObject> BumpPrefabs;
+    [SerializeField] private GameObject CoinPrefab;
+    [SerializeField] private GameObject DiamondPrefab;
     [SerializeField] private Renderer RoadRenderer;
     [SerializeField] public float RoadDimension = 5f;
 
@@ -17,9 +19,9 @@ public class RoadController : MonoBehaviour
 
     private (float, float) CameraBounds;
 
-    public void Setup(int obstaclesAmount, float scrollSpeed)
+    public void Setup(int obstaclesAmount, int coinsAmount, int diamondsAmount, float scrollSpeed)
     {
-        RoadGrid = new RoadGrid(Width, Height, obstaclesAmount);
+        RoadGrid = new RoadGrid(Width, Height, obstaclesAmount, coinsAmount, diamondsAmount);
         RB = GetComponent<Rigidbody2D>();
         
         CellType[][] grid = RoadGrid.Grid;
@@ -28,9 +30,9 @@ public class RoadController : MonoBehaviour
         {
             for (int j = 0; j < Height; j++)
             {
-                if (grid[i][j] == CellType.Bump)
+                if (grid[i][j] != CellType.None)
                 {
-                    InstantiateAtRoad(i, j);
+                    InstantiateAtRoad(grid[i][j], i, j);
                 }
             }
         }
@@ -41,13 +43,14 @@ public class RoadController : MonoBehaviour
     
     public void SetScrollSpeed(float speed)
     {
-        //if(RB != null)
+        if(RB != null)
         {
             RB.velocity = new Vector2(0, speed);
         }
     }
 
-    private void InstantiateAtRoad(int x, int y)
+    // TODO: Use Factory pattern
+    private void InstantiateAtRoad(CellType type, int x, int y)
     {
         var originPosition = Origin.localPosition;
         Vector3 position = new Vector3
@@ -55,9 +58,23 @@ public class RoadController : MonoBehaviour
             x = (x * CellDimension) + originPosition.x,
             y = (y * CellDimension) + originPosition.y,
         };
-        int index = Random.Range(0, BumpPrefabs.Count);
-        GameObject bumpPrefab = Instantiate(BumpPrefabs[index], transform);
-        bumpPrefab.transform.localPosition = position;
+        if (type == CellType.Bump)
+        {
+            int index = Random.Range(0, BumpPrefabs.Count);
+            GameObject bumpPrefab = Instantiate(BumpPrefabs[index], transform);
+            bumpPrefab.transform.localPosition = position;
+        }
+        else if (type == CellType.Coin)
+        {
+            GameObject coinPrefab = Instantiate(CoinPrefab, transform);
+            coinPrefab.transform.localPosition = position;
+        }
+        else if (type == CellType.Diamond)
+        {
+            GameObject diamondPrefab = Instantiate(DiamondPrefab, transform);
+            diamondPrefab.transform.localPosition = position;
+        }
+        
     }
     
     // TODO: Can this be converted in a method on the CameraUtilities?
