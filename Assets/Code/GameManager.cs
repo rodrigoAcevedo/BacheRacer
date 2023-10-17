@@ -53,16 +53,11 @@ public class GameManager : MonoBehaviour
     {
         LastKnownPlayerHealth = UserDataUtility.GetPlayerHealth();
         TotalKilometersRan = UserDataUtility.GetPlayerKilometersRan();
-        Events.OnUpdateMenuStats.Dispatch();
     }
 
     private void OnInventoryDataReceived()
     {
-        CoinsAmount = InventoryUtility.Coins;
-        DiamondsAmount = InventoryUtility.Diamonds;
         Events.OnUpdateMenuStats.Dispatch();
-        // PLEASE REMOVE THIS
-        // PlayfabManager.Instance.AddCurrency("NO", 1);
     }
     
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public static class InventoryUtility
 {
     // Economy
-    private static Dictionary<string, int> Inventory = new Dictionary<string, int>();
+    public static Dictionary<string, int> Inventory = new Dictionary<string, int>();
 
     public static void UpdateInventory(Dictionary<string, int> values)
     {
@@ -12,11 +12,13 @@ public static class InventoryUtility
         {
             Inventory.Add(value.Key, value.Value);
         }
+        Events.OnInventoryDataReceived.Dispatch();
     }
 
     public static void UpdateItem(string key, int value)
     {
         Inventory[key] = value;
+        Events.OnInventoryDataReceived.Dispatch();
     }
 
     public static int Coins => Inventory["CN"];

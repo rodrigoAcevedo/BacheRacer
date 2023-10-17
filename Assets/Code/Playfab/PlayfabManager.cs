@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.CloudScriptModels;
 
 public class PlayfabManager : MonoBehaviour
 {
@@ -97,9 +98,7 @@ public class PlayfabManager : MonoBehaviour
 
     private void OnGetUserInventorySuccess(GetUserInventoryResult result)
     {
-        // Can this be done better?
         InventoryUtility.UpdateInventory(result.VirtualCurrency);
-        Events.OnInventoryDataReceived.Dispatch();
     }
 
     public void AddCurrency(string type, int value)
@@ -132,6 +131,36 @@ public class PlayfabManager : MonoBehaviour
     {
         Debug.Log($"Subtracted currency!");
         InventoryUtility.UpdateItem(result.VirtualCurrency, result.Balance);
+    }
+
+    // TODO: Can we use Cloudscript for this method?
+    public void BuyItem(string type, int value, string costCurrency, int cost)
+    {
+        ExecuteCloudScriptRequest buyRequest = new ExecuteCloudScriptRequest
+        {
+            FunctionName = "BuyItem",
+            FunctionParameter = new
+            {
+                itemToBuy = type,
+                itemAmount = value,
+                itemCostCurrency = costCurrency,
+                itemCost = cost
+            }
+        };
+        
+        PlayFabClientAPI.ExecuteCloudScript(buyRequest, result =>
+        {
+            Debug.Log(result.FunctionResult);
+        }, error =>
+        {
+            Debug.Log("ExecuteCloudScript There was an error");
+        });
+    }
+
+    private void OnBuySuccess(ModifyUserVirtualCurrencyResult result, string currencyToSubstract, int cost)
+    {
+        InventoryUtility.UpdateItem(result.VirtualCurrency, result.Balance);
+        SubtractCurrency(currencyToSubstract, cost);
     }
 
     private void GetCurrencyRemainingTime()
