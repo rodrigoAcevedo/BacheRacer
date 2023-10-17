@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public float LastKnownPlayerHealth;
     public int CoinsAmount;
     public int DiamondsAmount;
+    public bool HasNitro;
 
     [SerializeField] public GameParameters BaseParameters;
     
@@ -50,7 +51,6 @@ public class GameManager : MonoBehaviour
 
     private void OnDataReceived()
     {
-        Debug.Log(UserDataUtility.Data);
         LastKnownPlayerHealth = UserDataUtility.GetPlayerHealth();
         TotalKilometersRan = UserDataUtility.GetPlayerKilometersRan();
         Events.OnUpdateMenuStats.Dispatch();
@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
         CoinsAmount = InventoryUtility.Coins;
         DiamondsAmount = InventoryUtility.Diamonds;
         Events.OnUpdateMenuStats.Dispatch();
+        // PLEASE REMOVE THIS
+        // PlayfabManager.Instance.AddCurrency("NO", 1);
     }
     
 

@@ -6,6 +6,7 @@ public static partial class Events
 {
     public static readonly GameEvent<float> OnDamage = new GameEvent<float>();
     public static readonly GameEvent<GameObject> OnPickup = new GameEvent<GameObject>();
+    public static readonly GameEvent<bool> OnNitroActivated = new GameEvent<bool>();
     public static readonly GameEvent OnLoseGame = new GameEvent();
     public static readonly GameEvent OnWinLevel = new GameEvent();
     

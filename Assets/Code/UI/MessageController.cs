@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,14 +31,21 @@ public class MessageController : MonoBehaviour
         switch (type)
         {
             case MessageType.Principal:
-                ShowPrincipalMessage(msg);
+                StartCoroutine(ShowPrincipalMessage(msg));
                 break;
         }
     }
 
-    private void ShowPrincipalMessage(string msg)
+    private IEnumerator ShowPrincipalMessage(string msg)
     {
         PrincipalMessageText.gameObject.SetActive(true);
         PrincipalMessageText.text = msg;
+        
+        yield return new WaitForSeconds(3f);
+        
+        PrincipalMessageText.gameObject.SetActive(false);
+        PrincipalMessageText.text = String.Empty;
+        yield return null;
     }
+    
 }

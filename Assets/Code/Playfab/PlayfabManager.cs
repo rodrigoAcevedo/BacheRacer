@@ -74,6 +74,11 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log("Error while saving data to server");
         Debug.Log(error.GenerateErrorReport());
     }
+    
+    private void OnError(PlayFabError error)
+    {
+        Debug.Log(error.GenerateErrorReport());
+    }
 
     private void OnDataReceived(GetUserDataResult result)
     {
@@ -93,14 +98,8 @@ public class PlayfabManager : MonoBehaviour
     private void OnGetUserInventorySuccess(GetUserInventoryResult result)
     {
         // Can this be done better?
-        InventoryUtility.Coins = result.VirtualCurrency["CN"];
-        InventoryUtility.Diamonds = result.VirtualCurrency["DM"];
+        InventoryUtility.UpdateInventory(result.VirtualCurrency);
         Events.OnInventoryDataReceived.Dispatch();
-    }
-
-    private void OnError(PlayFabError error)
-    {
-        Debug.Log(error.GenerateErrorReport());
     }
 
     public void AddCurrency(string type, int value)
@@ -116,6 +115,7 @@ public class PlayfabManager : MonoBehaviour
     private void OnAddCurrencySuccess(ModifyUserVirtualCurrencyResult result)
     {
         Debug.Log($"Added currency!");
+        InventoryUtility.UpdateItem(result.VirtualCurrency, result.Balance);
     }
 
     public void SubtractCurrency(string type, int value)
@@ -131,5 +131,11 @@ public class PlayfabManager : MonoBehaviour
     private void OnSubtractCurrencySuccess(ModifyUserVirtualCurrencyResult result)
     {
         Debug.Log($"Subtracted currency!");
+        InventoryUtility.UpdateItem(result.VirtualCurrency, result.Balance);
+    }
+
+    private void GetCurrencyRemainingTime()
+    {
+        // TODO: Create a method in cloudscript to return remaining time.
     }
 }

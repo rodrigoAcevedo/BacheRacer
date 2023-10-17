@@ -7,12 +7,14 @@ public class PlayerController : MonoBehaviour
     private float Health;
 
     private float TurnSpeed => GameManager.Instance.BaseParameters.BaseTurnSpeed;
-    
+
     private bool TouchingScreen = false;
     private bool CanMove = true;
-    private bool WonLevel = false;
+    private bool Invulnerable = false;
 
     private Vector3 Target;
+
+    [SerializeField] private GameObject NitroFlare;
 
     private void Start()
     {
@@ -22,12 +24,14 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         Events.OnDamage.Subscribe(OnDamage);
+        Events.OnNitroActivated.Subscribe(OnNitroActivated);
         Events.OnWinLevel.Subscribe(OnWinLevel);
     }
 
     private void OnDisable()
     {
         Events.OnDamage.Unsubscribe(OnDamage);
+        Events.OnNitroActivated.Unsubscribe(OnNitroActivated);
         Events.OnWinLevel.Unsubscribe(OnWinLevel);
     }
 
@@ -62,7 +66,7 @@ public class PlayerController : MonoBehaviour
                 MovingToTarget();
             }
         }
-        else if (WonLevel)
+        else if (Invulnerable)
         {
             MovingToTarget();
         }
@@ -75,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDamage(float damage)
     {
-        if (!WonLevel)
+        if (!Invulnerable)
         {
             Health -= damage;
         }
@@ -88,9 +92,18 @@ public class PlayerController : MonoBehaviour
         Events.OnUpdatePlayerHealth.Dispatch(Health.ToString());
     }
 
+    private void OnNitroActivated(bool isActive)
+    {
+        Invulnerable = isActive;
+        NitroFlare.SetActive(isActive);
+        
+        if(isActive)
+            Events.OnMessage.Dispatch(MessageType.Principal, "Nitro active! Invulnerable");
+    }
+
     private void OnWinLevel()
     {
-        WonLevel = true;
+        Invulnerable = true;
         CanMove = false;
         Target.y = 6f;
         UserDataUtility.SetPlayerHealth(Health);

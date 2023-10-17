@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotalKilometersRan: 0
-  LastKnownPlayerHealth: 100
+  LastKnownPlayerHealth: 0
   CoinsAmount: 0
   DiamondsAmount: 0
   BaseParameters:
@@ -785,7 +785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &796656224
 RectTransform:
   m_ObjectHideFlags: 0

@@ -40,5 +40,10 @@ public class MenuController : MonoBehaviour
         PlayerHealth.text = $"Health: {GameManager.Instance.LastKnownPlayerHealth}";
         CoinsAmount.text = $"CN: {GameManager.Instance.CoinsAmount}";
         DiamondsAmount.text = $"DM: {GameManager.Instance.DiamondsAmount}";
+
+        if (GameManager.Instance.LastKnownPlayerHealth > 0)
+        {
+            PlayButton.gameObject.SetActive(true);
+        }
     }
 }
