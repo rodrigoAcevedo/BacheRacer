@@ -289,6 +289,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KilometersDone: {fileID: 1167033922}
   PlayerHealth: {fileID: 56318401}
+  CoinsAmount: {fileID: 659221874}
+  DiamondsAmount: {fileID: 1335518573}
   PlayButton: {fileID: 796656225}
 --- !u!4 &120867360
 Transform:
@@ -401,7 +403,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'CN: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -594,6 +596,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TotalKilometersRan: 0
   LastKnownPlayerHealth: 100
+  CoinsAmount: 0
+  DiamondsAmount: 0
   BaseParameters:
     BaseScrollSpeed: 2
     BaseTurnSpeed: 3
@@ -1195,7 +1199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'DM: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1204,8 +1208,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294963085
+  m_fontColor: {r: 0.5529412, g: 0.9372549, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

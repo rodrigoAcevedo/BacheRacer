@@ -9,6 +9,7 @@ public class ItemController : MonoBehaviour
         if (other.CompareTag(GameConstants.Tags.PLAYER))
         {
             PlayfabManager.Instance.AddCurrency(currencyID, amount);
+            Destroy(gameObject);
         }
     }
 }
