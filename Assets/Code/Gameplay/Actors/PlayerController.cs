@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 Target;
 
     [SerializeField] private GameObject NitroFlare;
+    [SerializeField] private SpriteRenderer CarModel;
 
     private void Start()
     {
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
         if (!Invulnerable)
         {
             Health -= damage;
+            StartCoroutine(BlinkEffect());
         }
         if (Health <= 0)
         {
@@ -90,6 +93,18 @@ public class PlayerController : MonoBehaviour
             UserDataUtility.SetPlayerHealth(Health);
         }
         Events.OnUpdatePlayerHealth.Dispatch(Health.ToString());
+    }
+
+    private IEnumerator BlinkEffect()
+    {
+        CarModel.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        CarModel.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        CarModel.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        CarModel.enabled = true;
+        yield return new WaitForSeconds(0.1f);
     }
 
     private void OnNitroActivated(bool isActive)

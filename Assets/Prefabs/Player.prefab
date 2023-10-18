@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NitroFlare: {fileID: 7063627537275401179}
+  CarModel: {fileID: 2701146975512669567}
 --- !u!61 &1564995733919696484
 BoxCollider2D:
   m_ObjectHideFlags: 0
