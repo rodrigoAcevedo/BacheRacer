@@ -41,7 +41,7 @@ public class GameplayUIController : MonoBehaviour
     private void OnNitroButtonClicked()
     {
         Events.OnNitroActivated.Dispatch(true);
-        PlayfabManager.Instance.SubtractCurrency("NO", 1);
+        PlayfabManager.Instance.SubtractCurrency(GameConstants.Currencies.NITRO, 1);
         NitroButton.gameObject.SetActive(false);
         
         // Check if consumed the Nitro and see how much time is to be ready next one

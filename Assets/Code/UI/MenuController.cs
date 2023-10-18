@@ -13,13 +13,18 @@ public class MenuController : MonoBehaviour
     
     [SerializeField] private Button BuyNitroButton;
     [SerializeField] private TextMeshProUGUI BuyNitroTimer;
+
+    [SerializeField] private Button BuyHealthButton;
     
     [SerializeField] private Button PlayButton;
+
+    private float SecondsLeftToRefreshNitro;
 
     private void OnEnable()
     {
         PlayButton.onClick.AddListener(PlayGame);
         BuyNitroButton.onClick.AddListener(BuyNitro);
+        BuyHealthButton.onClick.AddListener(BuyHealth);
         Events.OnUpdateMenuStats.Subscribe(OnUpdateMenuStats);
         Events.OnCurrencyTimedUpdated.Subscribe(OnCurrencyTimedUpdated);
     }
@@ -28,6 +33,7 @@ public class MenuController : MonoBehaviour
     {
         PlayButton.onClick.RemoveListener(PlayGame);
         BuyNitroButton.onClick.RemoveListener(BuyNitro);
+        BuyHealthButton.onClick.AddListener(BuyNitro);
         Events.OnUpdateMenuStats.Unsubscribe(OnUpdateMenuStats);
         Events.OnCurrencyTimedUpdated.Unsubscribe(OnCurrencyTimedUpdated);
 
@@ -41,7 +47,12 @@ public class MenuController : MonoBehaviour
     private void BuyNitro()
     {
         // TODO: In a future this could be a bundle or something similar.
-        PlayfabManager.Instance.BuyItem("NO", 1, "DM", 1);
+        PlayfabManager.Instance.BuyItem(GameConstants.Currencies.NITRO, 1, GameConstants.Currencies.DIAMONDS, 1);
+    }
+
+    private void BuyHealth()
+    {
+        UserDataUtility.RestorePlayerHealth();
     }
 
     private void OnUpdateMenuStats()
@@ -52,10 +63,11 @@ public class MenuController : MonoBehaviour
         DiamondsAmount.text = $"DM: {InventoryUtility.Diamonds}";
         BuyNitroButton.gameObject.SetActive(!InventoryUtility.Nitro);
         BuyNitroTimer.gameObject.SetActive(!InventoryUtility.Nitro);
+        BuyHealthButton.gameObject.SetActive(GameManager.Instance.LastKnownPlayerHealth <= 0);
 
         if (!InventoryUtility.Nitro)
         {
-            PlayfabManager.Instance.GetTimeToRecharge("NO");
+            PlayfabManager.Instance.GetTimeToRecharge(GameConstants.Currencies.NITRO);
         }
 
         if (GameManager.Instance.LastKnownPlayerHealth > 0)
@@ -66,6 +78,13 @@ public class MenuController : MonoBehaviour
 
     private void OnCurrencyTimedUpdated()
     {
-        
+        SecondsLeftToRefreshNitro = InventoryUtility.currencyData[GameConstants.Currencies.NITRO].SecondsToRecharge;
+    }
+
+    private void Update()
+    {
+        SecondsLeftToRefreshNitro -= Time.deltaTime;
+        TimeSpan time = TimeSpan.FromSeconds(SecondsLeftToRefreshNitro);
+        BuyNitroTimer.text = time.ToString("mm':'ss");
     }
 }

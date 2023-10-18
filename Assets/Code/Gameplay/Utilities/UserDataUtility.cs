@@ -15,7 +15,19 @@ public static class UserDataUtility
         PlayfabManager.Instance.SaveData(GameConstants.PlayfabProperties.HEALTH, value.ToString());
         SaveOnLocalData(GameConstants.PlayfabProperties.HEALTH, value.ToString());
     }
-    
+
+    public static void RestorePlayerHealth()
+    {
+        // TODO: This could be better managed with a Store class utility.
+        if (GameManager.Instance.LastKnownPlayerHealth <= 0 && InventoryUtility.Coins >= 10)
+        {
+            SetPlayerHealth(GameManager.Instance.BaseParameters.DefaultPlayerHealth);
+            PlayfabManager.Instance.SubtractCurrency(GameConstants.Currencies.COINS, 10);
+            // Also we could make a method to tie this directly to the success callback of the substract currency.
+            Events.OnDataReceived.Dispatch();
+        }
+    }
+
     public static float GetPlayerHealth()
     {
         if (Data.ContainsKey(GameConstants.PlayfabProperties.HEALTH))

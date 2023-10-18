@@ -7,9 +7,6 @@ public class GameManager : MonoBehaviour
 
     public int TotalKilometersRan;
     public float LastKnownPlayerHealth;
-    public int CoinsAmount;
-    public int DiamondsAmount;
-    public bool HasNitro;
 
     [SerializeField] public GameParameters BaseParameters;
     
