@@ -15,6 +15,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private float YOriginOrdinate = -5f;
     [SerializeField] private int TotalRoadCellsToShow = 3;
     [SerializeField] private int InitialObstacles = 0;
+    [SerializeField] private RoadFactory roadFactory;
     
     [SerializeField]
     private List<RoadController> roads;
@@ -123,7 +124,7 @@ public class GameplayManager : MonoBehaviour
         GameObject roadCellInstance = Instantiate(RoadPrefab, roadPosition, Quaternion.identity, transform.parent);
         RoadController road = roadCellInstance.GetComponent<RoadController>();
         float speed = IsNitroActive ? NitroScrollSpeed : ScrollSpeed;
-        road.Setup(obstaclesAmount, coinsAmount, diamondsAmount, speed * (-1f));
+        road.Setup(obstaclesAmount, coinsAmount, diamondsAmount, speed * (-1f), roadFactory);
         roads.Add(road);
     }
 

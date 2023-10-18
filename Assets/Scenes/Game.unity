@@ -448,6 +448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 384319195}
   - component: {fileID: 384319194}
+  - component: {fileID: 384319196}
   m_Layer: 0
   m_Name: GameplayManager
   m_TagString: Untagged
@@ -474,6 +475,7 @@ MonoBehaviour:
   YOriginOrdinate: -5
   TotalRoadCellsToShow: 3
   InitialObstacles: 0
+  roadFactory: {fileID: 384319196}
   roads: []
 --- !u!4 &384319195
 Transform:
@@ -491,6 +493,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &384319196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384319193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c55ff1828ce4a0ab4a728ef5d853d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadItems:
+  - {fileID: 2826850860035018469, guid: f4192b8b6fdf44ce7bda043482a3334c, type: 3}
+  - {fileID: 1985666971488060182, guid: 2df4bbf2c2cc642ea8aff89ffa2300f6, type: 3}
+  - {fileID: -7105913843447865265, guid: c95d2c6f07cd3b544a11b89733b30a1e, type: 3}
 --- !u!1 &452169492
 GameObject:
   m_ObjectHideFlags: 0

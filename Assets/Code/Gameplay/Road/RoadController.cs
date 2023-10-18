@@ -16,13 +16,15 @@ public class RoadController : MonoBehaviour
     
     private RoadGrid RoadGrid;
     private Rigidbody2D RB;
+    private RoadFactory RoadFactory;
 
     private (float, float) CameraBounds;
 
-    public void Setup(int obstaclesAmount, int coinsAmount, int diamondsAmount, float scrollSpeed)
+    public void Setup(int obstaclesAmount, int coinsAmount, int diamondsAmount, float scrollSpeed, RoadFactory factory)
     {
         RoadGrid = new RoadGrid(Width, Height, obstaclesAmount, coinsAmount, diamondsAmount);
         RB = GetComponent<Rigidbody2D>();
+        RoadFactory = factory;
         
         CellType[][] grid = RoadGrid.Grid;
 
@@ -49,7 +51,6 @@ public class RoadController : MonoBehaviour
         }
     }
 
-    // TODO: Use Factory pattern
     private void InstantiateAtRoad(CellType type, int x, int y)
     {
         var originPosition = Origin.localPosition;
@@ -58,23 +59,9 @@ public class RoadController : MonoBehaviour
             x = (x * CellDimension) + originPosition.x,
             y = (y * CellDimension) + originPosition.y,
         };
-        if (type == CellType.Bump)
-        {
-            int index = Random.Range(0, BumpPrefabs.Count);
-            GameObject bumpPrefab = Instantiate(BumpPrefabs[index], transform);
-            bumpPrefab.transform.localPosition = position;
-        }
-        else if (type == CellType.Coin)
-        {
-            GameObject coinPrefab = Instantiate(CoinPrefab, transform);
-            coinPrefab.transform.localPosition = position;
-        }
-        else if (type == CellType.Diamond)
-        {
-            GameObject diamondPrefab = Instantiate(DiamondPrefab, transform);
-            diamondPrefab.transform.localPosition = position;
-        }
-        
+
+        RoadItem item = RoadFactory.CreateNewItem((int)type, transform);
+        item.transform.localPosition = position;
     }
     
     // TODO: Can this be converted in a method on the CameraUtilities?
