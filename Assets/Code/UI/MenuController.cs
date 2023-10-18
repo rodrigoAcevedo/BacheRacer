@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
         PlayButton.onClick.AddListener(PlayGame);
         BuyNitroButton.onClick.AddListener(BuyNitro);
         Events.OnUpdateMenuStats.Subscribe(OnUpdateMenuStats);
+        Events.OnCurrencyTimedUpdated.Subscribe(OnCurrencyTimedUpdated);
     }
 
     private void OnDisable()
@@ -28,6 +29,8 @@ public class MenuController : MonoBehaviour
         PlayButton.onClick.RemoveListener(PlayGame);
         BuyNitroButton.onClick.RemoveListener(BuyNitro);
         Events.OnUpdateMenuStats.Unsubscribe(OnUpdateMenuStats);
+        Events.OnCurrencyTimedUpdated.Unsubscribe(OnCurrencyTimedUpdated);
+
     }
 
     private void PlayGame()
@@ -59,5 +62,10 @@ public class MenuController : MonoBehaviour
         {
             PlayButton.gameObject.SetActive(true);
         }
+    }
+
+    private void OnCurrencyTimedUpdated()
+    {
+        
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -180,6 +181,9 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.ExecuteCloudScript(getTimeToRechargeRequest, result =>
         {
             Debug.Log(result.FunctionResult);
+            Dictionary<string, CurrencyInfo> currencyData = JsonConvert.DeserializeObject<Dictionary<string, CurrencyInfo>>(result.FunctionResult.ToString());
+            InventoryUtility.currencyData = currencyData;
+            Events.OnCurrencyTimedUpdated.Dispatch();
         }, error =>
         {
             Debug.LogError(error.Error);

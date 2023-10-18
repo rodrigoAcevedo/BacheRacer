@@ -5,6 +5,9 @@ public static class InventoryUtility
     // Economy
     public static Dictionary<string, int> Inventory = new Dictionary<string, int>();
 
+    // TODO: Find a better way to handle this
+    public static Dictionary<string, CurrencyInfo> currencyData = new Dictionary<string, CurrencyInfo>();
+
     public static void UpdateInventory(Dictionary<string, int> values)
     {
         Inventory = new Dictionary<string, int>();
