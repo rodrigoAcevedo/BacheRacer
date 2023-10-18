@@ -50,6 +50,11 @@ public class MenuController : MonoBehaviour
         BuyNitroButton.gameObject.SetActive(!InventoryUtility.Nitro);
         BuyNitroTimer.gameObject.SetActive(!InventoryUtility.Nitro);
 
+        if (!InventoryUtility.Nitro)
+        {
+            PlayfabManager.Instance.GetTimeToRecharge("NO");
+        }
+
         if (GameManager.Instance.LastKnownPlayerHealth > 0)
         {
             PlayButton.gameObject.SetActive(true);

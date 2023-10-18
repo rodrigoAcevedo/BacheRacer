@@ -133,38 +133,56 @@ public class PlayfabManager : MonoBehaviour
         InventoryUtility.UpdateItem(result.VirtualCurrency, result.Balance);
     }
 
-    // TODO: Can we use Cloudscript for this method?
-    public void BuyItem(string type, int value, string costCurrency, int cost)
+    public void BuyItem(string itemToBuy, int itemAmount, string costCurrency, int cost)
     {
         ExecuteCloudScriptRequest buyRequest = new ExecuteCloudScriptRequest
         {
             FunctionName = "BuyItem",
             FunctionParameter = new
             {
-                itemToBuy = type,
-                itemAmount = value,
-                itemCostCurrency = costCurrency,
-                itemCost = cost
+                itemToBuy = itemToBuy,
+                itemAmount = itemAmount,
+                costCurrency = costCurrency,
+                cost = cost
             }
         };
         
         PlayFabClientAPI.ExecuteCloudScript(buyRequest, result =>
         {
             Debug.Log(result.FunctionResult);
+
+            BuyResponse response = JsonUtility.FromJson<BuyResponse>(result.FunctionResult.ToString());
+
+            UserVirtualCurrencyResponse subtractedCurrency = response.subtractedCurrency;
+            UserVirtualCurrencyResponse addedCurrency = response.addedCurrency;
+            
+            InventoryUtility.UpdateItem(subtractedCurrency.VirtualCurrency, subtractedCurrency.Balance);
+            InventoryUtility.UpdateItem(addedCurrency.VirtualCurrency, addedCurrency.Balance);
+            // TODO: This would be better elsewhere.
+            Events.OnUpdateMenuStats.Dispatch();
         }, error =>
         {
             Debug.Log("ExecuteCloudScript There was an error");
         });
     }
 
-    private void OnBuySuccess(ModifyUserVirtualCurrencyResult result, string currencyToSubstract, int cost)
+    public void GetTimeToRecharge(string type)
     {
-        InventoryUtility.UpdateItem(result.VirtualCurrency, result.Balance);
-        SubtractCurrency(currencyToSubstract, cost);
-    }
-
-    private void GetCurrencyRemainingTime()
-    {
-        // TODO: Create a method in cloudscript to return remaining time.
+        ExecuteCloudScriptRequest getTimeToRechargeRequest = new ExecuteCloudScriptRequest
+        {
+            FunctionName = "GetTimeToRecharge",
+            FunctionParameter = new
+            {
+                currencyKey = type
+            }
+        };
+        
+        PlayFabClientAPI.ExecuteCloudScript(getTimeToRechargeRequest, result =>
+        {
+            Debug.Log(result.FunctionResult);
+        }, error =>
+        {
+            Debug.LogError(error.Error);
+        });
     }
 }
