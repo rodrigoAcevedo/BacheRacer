@@ -83,17 +83,20 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-        SecondsLeftToRefreshNitro -= Time.deltaTime;
-        TimeSpan time = TimeSpan.FromSeconds(SecondsLeftToRefreshNitro);
-        BuyNitroTimer.text = time.ToString("mm':'ss");
-
-        if (SecondsLeftToRefreshNitro <= 0)
+        if (!InventoryUtility.Nitro)
         {
-            BuyNitroButton.gameObject.SetActive(false);
-            BuyNitroTimer.gameObject.SetActive(false);
-            // With this we should update the inventory as we received the nitro.
-            // It's quite expensive we would make an specific call for Nitro
-            PlayfabManager.Instance.GetUserInventory();
+            SecondsLeftToRefreshNitro -= Time.deltaTime;
+            TimeSpan time = TimeSpan.FromSeconds(SecondsLeftToRefreshNitro);
+            BuyNitroTimer.text = time.ToString("mm':'ss");
+
+            if (SecondsLeftToRefreshNitro <= 0)
+            {
+                BuyNitroButton.gameObject.SetActive(false);
+                BuyNitroTimer.gameObject.SetActive(false);
+                // With this we should update the inventory as we received the nitro.
+                // It's quite expensive we would make an specific call for Nitro
+                PlayfabManager.Instance.GetUserInventory();
+            }
         }
     }
 }
