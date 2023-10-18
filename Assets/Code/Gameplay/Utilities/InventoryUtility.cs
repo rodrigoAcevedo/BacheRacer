@@ -24,7 +24,8 @@ public static class InventoryUtility
         Events.OnInventoryDataReceived.Dispatch();
     }
 
-    public static int Coins => Inventory[GameConstants.Currencies.COINS];
-    public static int Diamonds => Inventory[GameConstants.Currencies.DIAMONDS];
-    public static bool Nitro => Inventory[GameConstants.Currencies.NITRO] > 0;
+    public static int Coins => (bool) Inventory?.ContainsKey(GameConstants.Currencies.COINS) ? Inventory[GameConstants.Currencies.COINS] : 0;
+    public static int Diamonds => (bool) Inventory?.ContainsKey(GameConstants.Currencies.DIAMONDS) ? Inventory[GameConstants.Currencies.DIAMONDS] : 0;
+    public static bool Nitro => (bool) Inventory?.ContainsKey(GameConstants.Currencies.NITRO)
+        ? Inventory[GameConstants.Currencies.NITRO] > 0 : false;
 }
