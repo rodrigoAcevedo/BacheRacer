@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3235461582200832996}
   - component: {fileID: 7283776499448600984}
   - component: {fileID: 134701542023050154}
-  - component: {fileID: 7276293248960526230}
+  - component: {fileID: 8037993152113316515}
   m_Layer: 0
-  m_Name: Hole2
+  m_Name: Bump1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 06e2dd51a0daf7b4bb92ed09a89a11e1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 293f27af59978b841807cd446a40f708, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -111,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.36}
+  m_Size: {x: 0.44, y: 0.38}
   m_EdgeRadius: 0
 --- !u!114 &134701542023050154
 MonoBehaviour:
@@ -125,8 +125,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c762a6c7b2dfb43a7bab1c773bd1cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   damage: 5
---- !u!50 &7276293248960526230
+  spriteVariants:
+  - {fileID: 21300000, guid: 293f27af59978b841807cd446a40f708, type: 3}
+  - {fileID: 21300000, guid: 06e2dd51a0daf7b4bb92ed09a89a11e1, type: 3}
+  - {fileID: 21300000, guid: facb52eb58c4c6645ace010b98576c4b, type: 3}
+--- !u!50 &8037993152113316515
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0

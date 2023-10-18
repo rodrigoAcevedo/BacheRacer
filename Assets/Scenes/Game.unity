@@ -506,9 +506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadItems:
-  - {fileID: 2826850860035018469, guid: f4192b8b6fdf44ce7bda043482a3334c, type: 3}
-  - {fileID: 1985666971488060182, guid: 2df4bbf2c2cc642ea8aff89ffa2300f6, type: 3}
-  - {fileID: -7105913843447865265, guid: c95d2c6f07cd3b544a11b89733b30a1e, type: 3}
+  - {fileID: 134701542023050154, guid: c95d2c6f07cd3b544a11b89733b30a1e, type: 3}
+  - {fileID: 8800226630031377423, guid: f4192b8b6fdf44ce7bda043482a3334c, type: 3}
+  - {fileID: 2933977170907566253, guid: 2df4bbf2c2cc642ea8aff89ffa2300f6, type: 3}
 --- !u!1 &452169492
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemController : MonoBehaviour
+public class ItemController : RoadItem
 {
     [SerializeField] private string currencyID;
     [SerializeField] private int amount;
@@ -12,4 +12,6 @@ public class ItemController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public CellType type { get; set; }
 }

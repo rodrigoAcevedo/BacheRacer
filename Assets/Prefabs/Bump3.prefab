@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 134701542023050154}
   - component: {fileID: -5987867079791862922}
   m_Layer: 0
-  m_Name: Hole3
+  m_Name: Bump3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
